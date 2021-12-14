@@ -1,0 +1,521 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 void setup()\
+\{\
+  size(1000,1000);\
+  \
+\}\
+int pH = 40;\
+int pV = 40;\
+boolean click = false;\
+float dZone = 1005;\
+boolean open = false;\
+boolean keyCollect = false;\
+int level = 1;\
+\
+void draw()\
+\{\
+  //mouse coordinates for dev only\
+  background(250);\
+  println (mouseX +"," + mouseY);\
+\
+  startMenu();\
+  fill(0);\
+  if(click == true)\
+  \{\
+    clear();\
+    maze1();\
+    wallCollision();\
+    pInventory();\
+    key();\
+    traps();\
+    coins();\
+    keypressed();\
+    player();\
+  \}\
+  //hWalls(relay,20);  \
+\}\
+\
+void startMenu()\
+\{\
+  fill(0);\
+  rect(250,350,500,300);\
+  \
+  fill(0,0,255);\
+  rect(350,700,300,150);\
+\
+  textSize(32);\
+  fill(250);\
+  text("START", 450, 500, -30);  // Specify a z-axis value\
+  \
+  textSize(32);\
+  fill(250);\
+  text("EXIT", 470, 790, -50);  // Specify a z-axis value\
+  \
+  fill(0);\
+  text("Running Maze", 390, 200, -30);  // Specify a z-axis value\
+\
+\}\
+void mouseClicked()\
+\{\
+  if(mouseX>250&&mouseX<750 && mouseY > 350 && mouseY < 850)\
+  \{\
+    click=true;\
+  \}\
+  \
+  if(mouseX>350&&mouseX<650 && mouseY > 700 && mouseY < 850)\
+  \{\
+    exit();\
+  \}\
+  \
+\}\
+\
+void maze1 ()\
+\{\
+  //Border\
+  fill(0,0,255);\
+  rect(0,0, 20,1000);\
+  rect(0,0, 1000,20);\
+  rect(0,700, 1000,20);\
+  rect(980,0, 20,1000);\
+  \
+  int [] hx = new int [50];\
+  hx [0] = 100;\
+  hx [1] = 70;\
+  hx [2] = 190;\
+  hx [3] = 20;\
+  hx [4] = 70;\
+  hx [5] = 170;\
+  hx [6] = 20;\
+  hx [7] = 140;\
+  hx [8] = 40;\
+  hx [9] = 140;\
+  hx [10] = 60;\
+  hx [11] = 20;\
+  hx [12] = 180;\
+  hx [13] = 230;\
+  hx [14] = 290;\
+  hx [15] = 390;\
+  hx [16] = 190;\
+  hx [17] = 250;\
+  hx [18] = 150;\
+  hx [19] = 250;\
+  hx [20] = 270;\
+  hx [21] = 300;\
+  hx [22] = 350;\
+  hx [23] = 350;\
+  hx [24] = 450;\
+  hx [25] = 470;\
+  hx [26] = 590;\
+  hx [27] = 690;\
+  hx [28] = 670;\
+  hx [29] = 570;\
+  hx [30] = 530;\
+  hx [31] = 750;\
+  hx [11] = 900;\
+  hx [12] = 800;\
+  hx [13] = 800;\
+  hx [14] = 920;\
+  hx [15] = 410;\
+  hx [16] = 510;\
+  hx [17] = 610;\
+  hx [18] = 710;\
+  hx [19] = 810;\
+  hx [20] = 490;\
+  hx [21] = 440;\
+  hx [22] = 540;\
+  hx [23] = 350;\
+  hx [24] = 450;\
+  hx [25] = 470;\
+  hx [26] = 590;\
+  hx [27] = 630;\
+  hx [28] = 690;\
+  hx [29] = 790;\
+  hx [30] = 790;\
+  hx [31] = 930;\
+  \
+  int [] hy = new int [50];\
+  \
+  int [] vx = new int [42];\
+  int [] vy = new int [42];  \
+  \
+  fill(250);\
+  //Maze walls\
+  rect(100,50,20,100);\
+  \
+    rect(100, 50, 100, 20);\
+  rect(50,100,20,100);\
+    rect(70,180,100,20);  \
+  rect(170,180,20,100); \
+    rect(190,280,100,20);\
+  rect(170,280,20,100);\
+  rect(50,200,20,100);\
+    rect(20,300,100,20);\
+    rect(70,380,100,20);\
+  rect(170,380,20,100);\
+    rect(170,380,100,20);\
+  rect(50,350,20,100);\
+  rect(250,340,20,100);\
+    rect(20,480,100,20);\
+  rect(120,440,20,100);\
+    rect(140,540,70,20);\
+    rect(40,540,100,20);\
+  rect(120,560,20,100);\
+    rect(140,660,100,20);\
+    rect(60,660,80,20);\
+    rect(20,610,60,20);\
+    rect(180,610,100,20);\
+  rect(280,590,20,100);\
+  rect(210,480,20,100);\
+    rect(230,480,100,20);\
+  rect(330,480,20,100);\
+  rect(330,380,20,100);\
+  rect(290,280,20,100);\
+    rect(290,280,100,20);\
+  rect(390,180,20,100);\
+    rect(390,160,100,20);\
+  rect(390,280,20,100);\
+    rect(190,180,100,20);\
+  rect(330,380,20,100);\
+  rect(290,140,20,100);\
+    rect(250,240,100,20);\
+  rect(180,70,20,50);\
+    rect(150,120,100,20);\
+    rect(250,180,100,20);\
+  rect(250,40,20,100);\
+    rect(270,40,100,20);\
+  rect(350,40,20,100);\
+  rect(390,60,20,100);\
+    rect(300,630,100,20);\
+    rect(350,560,100,20);\
+  rect(450,560,20,100);\
+    rect(350,480,100,20);\
+  rect(430,380,20,100);\
+    rect(450,480,100,20);\
+  rect(530,460,20,100);\
+  rect(570,570,20,100);\
+    rect(470,600,100,20);\
+  rect(410,670,20,30);\
+  rect(510,650,20,50);\
+    rect(590,570,100,20);\
+    rect(690,650,100,20);\
+  rect(640,650,50,20);\
+  rect(690,670,20,30);\
+  rect(670,570,20,50);\
+  rect(670,430,20,100);\
+  \
+    rect(670,470,100,20);\
+    rect(530,440,100,20);\
+  rect(610,440,20,100);\
+  rect(750,490,20,100);\
+    rect(750,590,100,20);\
+  rect(830,570,20,100);\
+  rect(900,600,20,100);\
+    rect(900,550,80,20);\
+  rect(900,450,20,100);\
+    rect(800,500,100,20);\
+    rect(800,400,100,20);\
+  rect(900,320,20,100);\
+    rect(920,320,30,20);\
+    rect(410,280,100,20);\
+    rect(510,280,100,20);\
+  rect(510,300,20,100);\
+    rect(510,380,100,20);\
+    rect(610,380,100,20);\
+  rect(690,280,20,100);\
+    rect(710,280,100,20);\
+    rect(810,280,70,20);\
+  rect(750,280,20,100);\
+  rect(830,250,20,100);\
+  rect(490,110,20,100);\
+    rect(490,210,100,20);\
+    rect(440,100,100,20);\
+    rect(540,100,100,20);\
+  rect(540,20,20,50);\
+  rect(470,50,20,50);\
+  rect(100,250,20,100);\
+  rect(670,20,20,100);\
+  rect(600,50,20,50);\
+  rect(670,120,20,100);\
+  \
+    rect(570,150,100,20);\
+    rect(630,220,100,20);\
+  rect(640,220,20,100);\
+  rect(590,320,70,20);\
+    rect(690,120,100,20);\
+  rect(770,140,20,100);\
+  rect(720,20,20,50);\
+  rect(770,70,20,50);\
+    rect(790,70,100,20);\
+    rect(790,190,100,20);\
+  rect(890,70,20,70);\
+  rect(890,190,20,70);\
+    rect(930,160,50,20);\
+  rect(930,20,20,50);\
+\
+\}\
+\
+\
+void portal()\
+\{\
+  noStroke();\
+  noFill();\
+  rect(430,315, 50,50);\
+  if(keyCollect == true)\
+  \{\
+    level++;  \
+    keyCollect=false;\
+  \}\
+  \
+\}\
+\
+void keypressed()\
+\{\
+  if(key == 'W'||key =='w')\
+  \{\
+    pV = pV-2;\
+  \}\
+  if(key == 'S'||key =='s')\
+  \{\
+    pV = pV+2;\
+  \}\
+  if(key == 'A'||key =='a')\
+  \{\
+    pH= pH-2;\
+  \}\
+  if(key == 'D'||key =='d')\
+  \{\
+    pH=pH+2;\
+  \} \
+\}\
+\
+void player()\
+\{\
+  fill(250,0,0);\
+  ellipse(pH,pV,10,10);\
+  \
+  if(pH>280 && pH<330 && pV>70 && pV<130)\
+  \{\
+  pH ^= pH;\
+  pV ^= pV;\
+  \}\
+  if(pH>800 && pH<850 && pV>110 && pV<160)\
+  \{\
+  pH ^= pH;\
+  pV ^= pV;  \
+\}\
+  if(pH<300 && pH>255 && pV>515 && pV<565)\
+  \{\
+  pH ^= pH;\
+  pV ^= pV;\
+  \}\
+  //if(pH>70 && pH<280 && pV>125 && pV<330)\
+  //\{\
+  //pH ^= pH;\
+  //pV ^= pV;\
+  //\}\
+  if(pH<300 && pH>255 && pV>515 && pV<565)\
+  \{\
+  pH ^= pH;\
+  pV ^= pV;\
+  \}\
+\}\
+\
+void wallCollision()\
+\{\
+   \
+    //if(dist(pH,pV,20,20)<=5 && key == 'W'|| key == 'w')\
+    //\{\
+    //  pV ++;\
+    //\}\
+\
+\}\
+\
+void pInventory()\
+\{\
+  textSize(70);\
+  fill(250);\
+  text("INVENTORY", 300, 820, -30);\
+  \
+  rect(250,870,500,100);\
+  fill(0);\
+  rect(350,870,10,100);\
+  rect(450,870,10,100);\
+  rect(550,870,10,100);\
+  rect(650,870,10,100);\
+  \
+  float[][] items = new float[6][6];\
+  \
+  items[1][0] = 290;//coin1X\
+  items[1][1] = 920;//coin1Y\
+  \
+  items[2][1] = 400; //coin2X\
+  items[2][2] = 920;//coin2Y\
+  \
+  items[3][2]= 500; //coin3X\
+  items[3][3] = 920; //coin3Y\
+  \
+  items[4][3] = 600;//coin4X\
+  items[4][4]= 920; // coin4Y\
+  \
+  items[5][4] = 700; //keyX\
+  items[5][5] = 920; // KeyY\
+  \
+  //if()\
+  //\{\
+  //int vis = #CEAB2C;\
+  \
+  //fill(vis);\
+  //ellipse(items[1][0],items[1][1],30,60);\
+  //ellipse(items[2][1],items[2][2],30,60);\
+  //ellipse(items[3][2],items[3][3],30,60);\
+  //ellipse(items[4][3],items[4][4],30,60);\
+  //\}\
+  \
+\
+\}\
+void coins()\
+\{\
+  //int c1tran= 100;\
+  //int c2tran= 100;\
+  //float c3tran= 100;\
+  //float c4tran= 100;\
+  int vis = #CEAB2C;\
+  \
+  fill(vis);\
+  ellipse(935,640,10,20);\
+  \
+  fill(vis);\
+  ellipse(940,280,10,20);\
+  \
+  ellipse(85,570,10,20);\
+  \
+  ellipse(140,230,10,20);\
+  \
+  if (pH+5 == 935 && pV+5 == 640)\
+  \{\
+      vis = 250;\
+  \}\
+\}\
+\
+void traps()\
+\{\
+  //rewind trap\
+  fill(#00FCE9);\
+  beginShape();\
+  vertex(300,70);\
+  vertex(315,80);\
+  vertex(330,95);\
+  vertex(310,105);\
+  vertex(305,130);\
+  vertex(295,100);\
+  vertex(280,85);\
+  vertex(300,70);\
+  endShape();\
+  \
+  //rewind trap\
+  fill(#AC1EAF);\
+  beginShape();\
+  vertex(370,402);\
+  vertex(385,412);\
+  vertex(400,425);\
+  vertex(400,435);\
+  vertex(375,460);\
+  vertex(365,430);\
+  vertex(355,415);\
+  vertex(370,402);\
+  endShape();\
+  \
+  //rewind trap\
+  fill(#59A1AD);\
+  beginShape();\
+  vertex(820,110);\
+  vertex(835,120);\
+  vertex(850,135);\
+  vertex(830,145);\
+  vertex(825,160);\
+  vertex(815,130);\
+  vertex(800,115);\
+  vertex(820,110);\
+  endShape();\
+  \
+  //rewind trap\
+  fill(#3906D6);\
+  beginShape();\
+  vertex(255,515);\
+  vertex(280,530);\
+  vertex(300,510);\
+  vertex(300,550);\
+  vertex(280,540);\
+  vertex(275,565);\
+  vertex(255,515);\
+  endShape();\
+  \
+\}\
+void key()\
+\{\
+  if(keyCollect == true)\
+  \{\
+    fill(250);\
+  \}\
+  \
+  fill(#1AC924);\
+  beginShape();\
+  vertex(810,440);\
+  vertex(810,460);\
+  vertex(815,460);\
+  vertex(815,450);\
+  vertex(825,450);\
+  vertex(825,460);\
+  vertex(835,460);\
+  vertex(835,450);\
+  vertex(835,440);\
+  vertex(855,450);\
+  vertex(855,440);\
+  vertex(810,440);\
+  endShape();\
+  \
+  \
+\}\
+\
+void deathZone()\
+\{\
+  stroke(#D7E821);\
+  strokeWeight(20);\
+  noFill();\
+  ellipse(500,500,dZone,dZone);\
+  float l2speed = 1.5;\
+  float l3speed = 2;\
+  \
+  if (keyCollect == true)\
+  \{\
+    dZone--;\
+    if(level == 2)\
+    \{\
+      dZone= dZone - l2speed;\
+    \}\
+    if(level == 3)\
+    \{\
+      dZone= dZone - l3speed;\
+    \}\
+  \}\
+\}\
+\
+void gameOver()\
+\{\
+  //if(dZone == player)\
+  //\{\
+    \
+  //\}\
+  textSize(100);\
+  fill(250);\
+  text("GAME OVER!", height/2, width/2, -30);\
+  print(); // to allow time before game close\
+  exit();\
+  \
+\}}
